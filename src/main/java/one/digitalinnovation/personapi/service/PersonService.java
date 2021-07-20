@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
-	private PersonRepository personRepository;
+	private final PersonRepository personRepository;
 	
 	private final PersonMapper personMapper = PersonMapper.INSTANCE;
 	
@@ -24,14 +24,13 @@ public class PersonService {
 	
 	public MessageResponseDTO createPerson(PersonDTO personDTO) {
 		Person personToSave = personMapper.toModel(personDTO);
-		
 		Person savedPerson = personRepository.save(personToSave);
+		
 		return MessageResponseDTO
 			.builder()
 			.message("Created person with ID " + savedPerson.getId())
 			.build();
 	}
-	
 	
 	public List<PersonDTO> listAll() {
 		List<Person> allPeople = personRepository.findAll();
